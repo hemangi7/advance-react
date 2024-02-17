@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
+import './output.css'
 import 'swiper/css';
 
 // bootstrap css
@@ -32,6 +33,7 @@ import Login from './components/Login.jsx';
 import ErrorPage from './components/ErrorPage.jsx';
 import PrivateRoute from './PrivateRoute/PrivateRoute.jsx';
 import AuthProvider from './contexts/AuthProvider.jsx';
+import App1 from './App1.jsx';
 
 
 const router = createBrowserRouter([
@@ -85,6 +87,10 @@ const router = createBrowserRouter([
   {
     path: "/check-out",
     element: <CheckoutPage/>
+  },
+  {
+    path: "/customize",
+    element: <App1/>
   },
 ]);
 

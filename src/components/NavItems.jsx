@@ -10,12 +10,12 @@ const NavItems = () => {
   const [headerFiexd, setHeaderFiexd] = useState(false);
 
   // check if user is register
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut, isAdmin } = useContext(AuthContext);
 
   const handleLogout = () => {
     logOut()
       .then(() => {
-        // Sign-out successful.
+        auth.signOut();
       })
       .catch((error) => {
         console.log(error);

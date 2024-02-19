@@ -34,6 +34,10 @@ import ErrorPage from './components/ErrorPage.jsx';
 import PrivateRoute from './PrivateRoute/PrivateRoute.jsx';
 import AuthProvider from './contexts/AuthProvider.jsx';
 import App1 from './App1.jsx';
+import Dashboard from './pages/Admin/Dashboard.jsx'
+import Products from './pages/Admin/Products.jsx'
+import AddProducts from './pages/Admin/AddProducts.jsx'
+import Orders from './pages/Admin/Orders.jsx'
 
 
 const router = createBrowserRouter([
@@ -74,6 +78,7 @@ const router = createBrowserRouter([
         path: "/cart-page",
         element: <PrivateRoute><CartPage/></PrivateRoute>
       },
+      
     ]
   },
   {
@@ -92,6 +97,22 @@ const router = createBrowserRouter([
     path: "/customize",
     element: <App1/>
   },
+  {
+    path: "/dashboard",
+    element: <Dashboard/>
+  },
+  {
+    path: "/products",
+    element: <Products/>
+  },
+  {
+    path: "/addproducts",
+    element: <AddProducts/>
+  },
+  {
+    path: "/orders",
+    element: <Orders/>
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

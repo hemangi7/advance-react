@@ -34,17 +34,28 @@ const AuthProvider = ({children}) => {
         return signOut(auth);
     }
 
-    useEffect( () =>{
+    useEffect(() =>{
         const unsubscribe = onAuthStateChanged(auth, currentUser =>{
-            // console.log(currentUser);
-            setUser(currentUser);
+                if (currentUser) {
+                  // Check if the user has an additional role (e.g., admin)
+                  // You can implement your logic to determine admin status here
+                  const isAdmin = isAdminUser(currentUser);
+                  setUser({ ...currentUser, isAdmin });
+                } else {
+                  setUser(null);
+                }
             setLoading(false);
         });
 
         return () =>{
             return unsubscribe();
         }
-    }, [])
+    }, []);
+
+    const isAdminUser = (user) => {
+        const adminEmails = ['admin@example.com'];
+        return adminEmails.includes(user.email);
+      };
 
     const authInfo = {
         user, 

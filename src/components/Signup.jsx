@@ -69,8 +69,7 @@ const Signup = () => {
       // Passwords match, proceed with signup logic
       setErrorMessage(""); // Clear the error message
       createUser(email, password)
-        .then((userCredential) => {
-          // Signed in successfully
+        .then((userCredential) => {          
           const user = userCredential.user;
           alert("Account Created Successfully!")
           navigate(from, { replace: true });
@@ -134,26 +133,6 @@ const Signup = () => {
                   <button onClick={handleRegister} className="github">
                     <i className="icofont-github"></i>
                   </button>
-                </li>
-                <li>
-                  <a href="/" className="facebook">
-                    <i className="icofont-facebook"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="/" className="twitter">
-                    <i className="icofont-twitter"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="/" className="linkedin">
-                    <i className="icofont-linkedin"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="/" className="instagram">
-                    <i className="icofont-instagram"></i>
-                  </a>
                 </li>
               </ul>
             </div>

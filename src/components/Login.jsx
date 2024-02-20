@@ -40,6 +40,18 @@ const Login = () => {
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setErrorMessage("Please provide a valid email address.");
+      return;
+    }
+
+    // Basic password validation (you can customize based on your requirements)
+    if (password.length < 6) {
+      setErrorMessage("Password must be at least 6 characters long.");
+      return;
+    }
     // console.log(email, password);
     login(email, password)
       .then((result) => {
@@ -92,7 +104,7 @@ const Login = () => {
                     <input type="checkbox" name="remember" id="remember" />
                     <label htmlFor="remember">Remember Me</label>
                   </div>
-                  <Link to="/forgetpass">Forget Password?</Link>
+                  <Link to="/forgotpass">Forgot Password?</Link>
                 </div>
               </div>
               <div className="form-group text-center">

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
 const btnText = "Sign up for Free";
-const title = "Learn Anytime, Anywhere";
-const desc = "Take courses on your any device with our app & learn all time what you want. Just download & install & start to learn";
+// const title = "Learn Anytime, Anywhere";
+// const desc = "Take courses on your any device with our app & learn all time what you want. Just download & install & start to learn";
 
 const AppSection = () => {
   return (
@@ -10,8 +10,8 @@ const AppSection = () => {
     <div className="container">
         <div className="section-header text-center">
             <Link to="/signup" className="lab-btn mb-4"><span>{btnText}</span></Link>
-            <h2 className="title">{title}</h2>
-            <p>{desc}</p>
+            {/* <h2 className="title">{title}</h2>
+            <p>{desc}</p> */}
         </div>
         <div className="section-wrapper">
             <ul className="lab-ul">

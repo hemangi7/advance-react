@@ -161,7 +161,7 @@ const CartPage = () => {
                         <select>
                           <option value="volvo">United Kingdom (UK)</option>
                           <option value="saab">Bangladesh</option>
-                          <option value="saab">Pakisthan</option>
+                          <option value="saab">Pakistan</option>
                           <option value="saab">India</option>
                           <option value="saab">Nepal</option>
                         </select>

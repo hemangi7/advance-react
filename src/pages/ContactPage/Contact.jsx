@@ -1,4 +1,6 @@
 import React from "react";
+import {useState} from 'react';
+import emailjs from "emailjs-com";
 import GoogleMap from "../../components/Sidebar/GoogleMap";
 import PageHeader from "../../components/PageHeader";
 
@@ -7,7 +9,7 @@ const title = "We're Always Eager To Hear From You!";
 const conSubTitle = "Get in touch with Contact us";
 const conTitle =
   "Fill The Form Below So We Can Get To Know You And Your Needs Better.";
-const btnText = "Send our Message";
+const btnText = "Send Message";
 
 const contactList = [
   {
@@ -37,6 +39,48 @@ const contactList = [
 ];
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    number: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleInputChange = (e) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    // Use the emailjs.send() method to send the email
+    emailjs.send(
+      "service_p2cajch", // Replace with your EmailJS service ID
+      "template_g5v9l2w", // Replace with your EmailJS template ID
+      formData,
+      "01ToesWhkMGnGAJ1i" // Replace with your EmailJS user ID
+    )
+      .then((response) => {
+        console.log("Email sent successfully:", response);
+        // You can add a success message or redirect the user
+        setFormData({
+          name: "",
+          email: "",
+          number: "",
+          subject: "",
+          message: "",
+        });
+      })
+      .catch((error) => {
+        console.error("Email failed to send:", error);
+        // Handle the error, show an error message, or redirect the user
+      });
+  };
+
   return (
     <div>
       <PageHeader title={"Get In Touch With Us"} curPage={"Contact Us"} />
@@ -77,18 +121,19 @@ const Contact = () => {
             <h2 className="title">{conTitle}</h2>
           </div>
           <div className="section-wrapper">
-            <form className="contact-form">
+            <form className="contact-form" onSubmit={handleFormSubmit}>
               <div className="form-group">
-                <input type="text" name="name" placeholder="Your Name *" />
+                <input type="text" name="name" placeholder="Your Name *" onChange={handleInputChange} />
               </div>
               <div className="form-group">
-                <input type="text" name="email" placeholder="Your Email *" />
+                <input type="text" name="email" placeholder="Your Email *" onChange={handleInputChange} />
               </div>
               <div className="form-group">
                 <input
                   type="text"
                   name="number"
                   placeholder="Mobile Number *"
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="form-group">
@@ -96,6 +141,7 @@ const Contact = () => {
                   type="text"
                   name="subject"
                   placeholder="Your Subject *"
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="form-group w-100">
@@ -103,6 +149,7 @@ const Contact = () => {
                   rows="8"
                   type="text"
                   placeholder="Your Message"
+                  onChange={handleInputChange}
                 ></textarea>
               </div>
               <div className="form-group w-100 text-center">

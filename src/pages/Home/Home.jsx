@@ -14,11 +14,9 @@ const Home = () => {
         <Banner/>
         <HomeCategory/>
         <CategoryShowCase/>
-        <Register/>
         <LocationSprade/>
-        <AboutUs/>
-        <AppSection/>
-        <Sponsor/>
+        {/* <AboutUs/> */}
+        <AppSection/>   
     </div>
   )
 }

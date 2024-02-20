@@ -1,9 +1,7 @@
-
 import { Link } from "react-router-dom";
 
 const title = <h2 className="title">More Then <span className="yellow-color">60,000</span> Customers</h2>;
 const desc = "Buy products on your any device with our app & enjoy your time what you want. Just download & install & start to shopping";
-
 
 const clientsList = [
     {

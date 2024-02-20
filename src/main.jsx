@@ -38,6 +38,7 @@ import Dashboard from './pages/Admin/Dashboard.jsx'
 import Products from './pages/Admin/Products.jsx'
 import AddProducts from './pages/Admin/AddProducts.jsx'
 import Orders from './pages/Admin/Orders.jsx'
+import ForgotPassword from './components/ForgotPasword.jsx'
 
 
 const router = createBrowserRouter([
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login/>
+  },
+  {
+    path: "/forgotpass",
+    element: <ForgotPassword/>
   },
   {
     path: "/check-out",

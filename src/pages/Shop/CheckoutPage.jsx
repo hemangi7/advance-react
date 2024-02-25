@@ -28,9 +28,40 @@ const CheckoutPage = () => {
       navigate(from, { replace: true });
   }
 
+  const validateCardholderName = (value) => {
+    return /^[a-zA-Z\s]*$/.test(value);
+  };
+
+  // Function to validate card number (should accept 16 digits)
+  const validateCardNumber = (value) => {
+    return /^\d{16}$/.test(value);
+  };
+
+  // Function to validate expiry date (should accept date in mm/yy format)
+  const validateExpiryDate = (value) => {
+    return /^(0[1-9]|1[0-2])\/\d{2}$/.test(value);
+  };
+
+  // Function to validate CVV (should accept 3 digits)
+  const validateCVV = (value) => {
+    return /^\d{3}$/.test(value);
+  };
+
   const handleInputChange = () => {
     // Check if all required fields are filled
-    const isFormValid = Array.from(document.querySelectorAll('.modalCard input[required]')).every(input => input.value.trim() !== '');
+    const isRequiredFieldsFilled = Array.from(document.querySelectorAll('.modalCard input[required]')).every(input => input.value.trim() !== '');
+
+    const cardholderNameInput = document.querySelector('#cardholderName');
+    const cardNumberInput = document.querySelector('#cardNumber');
+    const expiryDateInput = document.querySelector('#expiryDate');
+    const cvvInput = document.querySelector('#cvv');
+
+    const isCardholderNameValid = validateCardholderName(cardholderNameInput.value);
+    const isCardNumberValid = validateCardNumber(cardNumberInput.value);
+    const isExpiryDateValid = validateExpiryDate(expiryDateInput.value);
+    const isCVVValid = validateCVV(cvvInput.value);
+
+    const isFormValid = isRequiredFieldsFilled && isCardholderNameValid && isCardNumberValid && isExpiryDateValid && isCVVValid;
     setIsFormValid(isFormValid);
   };
   // Event handler for input changes
@@ -120,6 +151,8 @@ const CheckoutPage = () => {
                             name="name"
                             className="form-control"
                             required="required"
+                            onBlur={handleInputChange}
+
                           />
                           <span>Cardholder Name</span>
                         </div>
@@ -131,6 +164,7 @@ const CheckoutPage = () => {
                             max="999"
                             className="form-control"
                             required="required"
+                            onBlur={handleInputChange}
                           />
                           <span>Card Number</span> <i className="fa fa-eye"></i>
                         </div>
@@ -143,6 +177,7 @@ const CheckoutPage = () => {
                               max="999"
                               className="form-control"
                               required="required"
+                              onBlur={handleInputChange}
                             />
                             <span>Expiration Date</span>
                           </div>
@@ -154,14 +189,10 @@ const CheckoutPage = () => {
                               max="999"
                               className="form-control"
                               required="required"
+                              onBlur={handleInputChange}
                             />
                             <span>CVV</span>
                           </div>
-                        </div>
-                        <div className="px-5 pay">
-                          <button className="btn btn-success btn-block" onClick={handleOrderConfirm}>
-                            Pay Now
-                          </button>
                         </div>
                       </div>
                     </div>
@@ -187,6 +218,7 @@ const CheckoutPage = () => {
                             name="name"
                             className="form-control"
                             required="required"
+                            onBlur={handleInputChange}
                           />
                           <span>Enter your email</span>
                         </div>
@@ -198,6 +230,7 @@ const CheckoutPage = () => {
                             max="999"
                             className="form-control"
                             required="required"
+                            onBlur={handleInputChange}
                           />
                           <span>Your Name</span>
                         </div>
@@ -210,6 +243,7 @@ const CheckoutPage = () => {
                               max="999"
                               className="form-control"
                               required="required"
+                              onBlur={handleInputChange}
                             />
                             <span>Extra Info</span>
                           </div>
@@ -221,6 +255,7 @@ const CheckoutPage = () => {
                               max="999"
                               className="form-control"
                               required="required"
+                              onBlur={handleInputChange}
                             />
                             <span></span>
                           </div>

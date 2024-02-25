@@ -64,6 +64,7 @@ const CheckoutPage = () => {
     const isFormValid = isRequiredFieldsFilled && isCardholderNameValid && isCardNumberValid && isExpiryDateValid && isCVVValid;
     setIsFormValid(isFormValid);
   };
+
   // Event handler for input changes
   const handleInputBlur = () => {
     handleInputChange();
@@ -77,6 +78,7 @@ const CheckoutPage = () => {
       alert('Please fill in all required fields before proceeding.');
     }
   };
+
   return (
     <div className="modalCard">
       <Button variant="primary" onClick={handleShow} className="py-2">
@@ -113,19 +115,20 @@ const CheckoutPage = () => {
                     </a>
                   </li>
                   <li className="nav-item" role="presentation">
+                    {/* Add 'Cash on Delivery' option */}
                     <a
                       className={`nav-link ${
-                        activeTab === "paypal" ? "active" : ""
+                        activeTab === "cashOnDelivery" ? "active" : ""
                       }`}
-                      id="paypal-tab"
+                      id="cashOnDelivery-tab"
                       data-toggle="tab"
-                      href="#paypal"
+                      href="#cashOnDelivery"
                       role="tab"
-                      aria-controls="paypal"
-                      aria-selected={activeTab === "paypal"}
-                      onClick={() => handleTabChange("paypal")}
+                      aria-controls="cashOnDelivery"
+                      aria-selected={activeTab === "cashOnDelivery"}
+                      onClick={() => handleTabChange("cashOnDelivery")}
                     >
-                      <img src="https://i.imgur.com/yK7EDD1.png" width="80" />
+                      Cash on Delivery
                     </a>
                   </li>
                 </ul>
@@ -148,18 +151,19 @@ const CheckoutPage = () => {
                         <div className="inputbox">
                           <input
                             type="text"
-                            name="name"
+                            name="cardholderName"  // Use a unique name for each input field
+                            id="cardholderName"  
                             className="form-control"
                             required="required"
                             onBlur={handleInputChange}
-
                           />
                           <span>Cardholder Name</span>
                         </div>
                         <div className="inputbox">
                           <input
                             type="text"
-                            name="name"
+                            name="cardNumber"      // Use a unique name for each input field
+                            id="cardNumber" 
                             min="1"
                             max="999"
                             className="form-control"
@@ -172,7 +176,8 @@ const CheckoutPage = () => {
                           <div className="inputbox">
                             <input
                               type="text"
-                              name="name"
+                              name="expiryDate"      // Use a unique name for each input field
+                              id="expiryDate"  
                               min="1"
                               max="999"
                               className="form-control"
@@ -184,7 +189,7 @@ const CheckoutPage = () => {
                           <div className="inputbox">
                             <input
                               type="text"
-                              name="name"
+                              id="cvv"              // Add an id for easier selection
                               min="1"
                               max="999"
                               className="form-control"
@@ -197,77 +202,30 @@ const CheckoutPage = () => {
                       </div>
                     </div>
                   </div>
-                  {/* paypal content */}
+                  {/* cash on delivery content */}
                   <div
                     className={`tab-pane fade ${
-                      activeTab === "paypal" ? "show active" : ""
+                      activeTab === "cashOnDelivery" ? "show active" : ""
                     }`}
-                    id="paypal"
+                    id="cashOnDelivery"
                     role="tabpanel"
-                    aria-labelledby="paypal-tab"
+                    aria-labelledby="cashOnDelivery-tab"
                   >
-                    {/* Paypal tab content */}
+                    {/* Cash on Delivery content */}
                     <div className="mx-4 mt-4">
                       <div className="text-center">
-                        <h5>Paypal Account Info</h5>
+                        <h5>Cash on Delivery</h5>
                       </div>
                       <div className="form mt-3">
-                        <div className="inputbox">
-                          <input
-                            type="text"
-                            name="name"
-                            className="form-control"
-                            required="required"
-                            onBlur={handleInputChange}
-                          />
-                          <span>Enter your email</span>
-                        </div>
-                        <div className="inputbox">
-                          <input
-                            type="text"
-                            name="name"
-                            min="1"
-                            max="999"
-                            className="form-control"
-                            required="required"
-                            onBlur={handleInputChange}
-                          />
-                          <span>Your Name</span>
-                        </div>
-                        <div className="d-flex flex-row">
-                          <div className="inputbox">
-                            <input
-                              type="text"
-                              name="name"
-                              min="1"
-                              max="999"
-                              className="form-control"
-                              required="required"
-                              onBlur={handleInputChange}
-                            />
-                            <span>Extra Info</span>
-                          </div>
-                          <div className="inputbox">
-                            <input
-                              type="text"
-                              name="name"
-                              min="1"
-                              max="999"
-                              className="form-control"
-                              required="required"
-                              onBlur={handleInputChange}
-                            />
-                            <span></span>
-                          </div>
-                        </div>
+                        <p>Pay with cash when your order is delivered to your doorstep.</p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              {/* payment desclaimer */}
+              {/* payment disclaimer */}
               <p className="mt-3 px-4 p-Disclaimer">
-              <em>Payment Disclaimer:</em> In no event shall payment or partial payment by Owner for any material or service
+                <em>Payment Disclaimer:</em> In no event shall payment or partial payment by Owner for any material or service
               </p>
             </div>
             <div className="modal-footer">

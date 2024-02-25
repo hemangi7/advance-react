@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import { auth } from "../../contexts/AuthProvider";
 import { addDoc, collection, doc } from "firebase/firestore";
 import { firestore } from "../../firebase/firebase.config";
-// import { toast } from "react-toastify";
+import {ToastContainer, toast } from "react-toastify";
+import { Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const desc =
   "Energistia an deliver atactica metrcs after avsionary Apropria trnsition enterpris an sources applications emerging 	psd template.";
@@ -58,12 +60,12 @@ const ProductDisplay = ({ item }) => {
         ...product,
         userId,
       });
-      toast.success("🦄 Wow so easy!", {
+      toast.success("Product added to cart", {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+        pauseOnHover: false,
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -120,6 +122,7 @@ const ProductDisplay = ({ item }) => {
       </div>
       {/* Single Product Cart Component here */}
       <div>
+      <ToastContainer/>
         <form onSubmit={handleSubmit}>
           <div className="select-product size">
             <select value={size} onChange={handleSizeChange}>
@@ -167,6 +170,7 @@ const ProductDisplay = ({ item }) => {
           </div>
           <button type="submit" className="lab-btn">
             <span>Add To Cart</span>
+            
           </button>
 
           <Link to="/cart-page" className="lab-btn bg-primary">

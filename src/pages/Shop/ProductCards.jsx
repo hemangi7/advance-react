@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-
 import { Link } from "react-router-dom";
 import Rating from "../../components/Sidebar/rating";
 
@@ -22,9 +21,7 @@ const ProductCards = ({ products, GridList }) => {
                 <Link to={`/shop/${product.id}`}>
                   <i className="icofont-eye"></i>
                 </Link>
-                <a href="#">
-                  <i className="icofont-heart"></i>
-                </a>
+                
                 <Link to="/cart-page">
                   <i className="icofont-cart-alt"></i>
                 </Link>
@@ -48,10 +45,7 @@ const ProductCards = ({ products, GridList }) => {
               <div className="product-action-link">
                 <a href="#">
                   <i className="icofont-eye"></i>
-                </a>
-                <a href="#">
-                  <i className="icofont-heart"></i>
-                </a>
+                </a>                
                 <a href="#">
                   <i className="icofont-cart-alt"></i>
                 </a>

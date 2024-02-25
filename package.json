@@ -28,6 +28,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.1",
     "react-router-dom": "^6.16.0",
+    "react-toastify": "^10.0.4",
     "request": "^2.88.2",
     "styled-components": "^6.1.8",
     "swiper": "^10.3.1",

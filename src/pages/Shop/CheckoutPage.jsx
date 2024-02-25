@@ -3,8 +3,12 @@ import "../../components/modal.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
+import { firestore } from "../../firebase/firebase.config";
 
-const CheckoutPage = () => {
+const CheckoutPage = ({ cartItems, address, city, pincode }) => {
   const [show, setShow] = useState(false);
   const [activeTab, setActiveTab] = useState("visa"); // Initial active tab
   const [isFormValid, setIsFormValid] = useState(false);
@@ -16,39 +20,55 @@ const CheckoutPage = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // order confirmation and redirect to home page
   const location = useLocation();
   const navigate = useNavigate();
 
   const from = location.state?.from?.pathname || "/";
 
-  const handleOrderConfirm = () => {
-      alert("Your order placed successfully!")
-      localStorage.removeItem("cart");
+  const handleOrderConfirm = async () => {
+    try {
+      const orderData = {
+        cartItems,
+        address,
+        city,
+        pincode,
+      }; 
+      await addDoc(collection(firestore, "orders"), orderData);
+      cartItems.forEach(async (item) => {
+        await deleteDoc(doc(firestore, "cart", item._id));
+      });
+      toast.success("Your order placed successfully!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
       navigate(from, { replace: true });
-  }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const validateCardholderName = (value) => {
     return /^[a-zA-Z\s]*$/.test(value);
   };
 
-  // Function to validate card number (should accept 16 digits)
   const validateCardNumber = (value) => {
     return /^\d{16}$/.test(value);
   };
 
-  // Function to validate expiry date (should accept date in mm/yy format)
   const validateExpiryDate = (value) => {
     return /^(0[1-9]|1[0-2])\/\d{2}$/.test(value);
   };
 
-  // Function to validate CVV (should accept 3 digits)
   const validateCVV = (value) => {
     return /^\d{3}$/.test(value);
   };
 
   const handleInputChange = () => {
-    // Check if all required fields are filled
     const isRequiredFieldsFilled = Array.from(document.querySelectorAll('.modalCard input[required]')).every(input => input.value.trim() !== '');
 
     const cardholderNameInput = document.querySelector('#cardholderName');

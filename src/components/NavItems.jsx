@@ -115,7 +115,7 @@ const NavItems = () => {
                       Profile
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
-                    <NavDropdown.Item href="/cart-page">Order</NavDropdown.Item>
+                    <NavDropdown.Item href="/orders">Orders</NavDropdown.Item>
                   </NavDropdown>
                 </>
               ) : (

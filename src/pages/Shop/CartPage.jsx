@@ -16,7 +16,6 @@ import {
 } from "firebase/firestore";
 import { firestore } from "../../firebase/firebase.config";
 import { auth } from "../../contexts/AuthProvider";
-import Button from "react-bootstrap/Button";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -88,32 +87,6 @@ const CartPage = () => {
       console.log(error);
     }
   };
-  const handleShow = () => {
-  //   const addressInfo = {
-  //     address,
-  //     city,
-  //     pincode,
-  //   };
-
-  //   // var options = {
-  //   //   key: "rzp_test_Rw6OPD6Xd4oKht",
-  //   //   key_secret: "Vr7Gx2UPc8Zd4H0VR2SsaOjv",
-  //   //   amount: parseInt(orderTotal),
-  //   //   currency: "USD",
-  //   //   order_receipt: "order_rcptit_ShopCart",
-  //   //   name: "Shop Cart",
-  //   //   description: "payment module",
-  //   //   handler: (res) => {
-  //   //     console.log(res);
-  //   //   },
-  //   //   theme: { color: "#3399cc" },
-  //   // };
-
-  //   // var pay = new Razorpay(options);
-  //   // pay.open();
-  };
-
-
 
   // Calculate the cart subtotal
   const cartSubtotal = cartItems.reduce((total, item) => {
@@ -209,13 +182,14 @@ const CartPage = () => {
                   <input type="submit" value="Apply Coupon" />
                 </form>
                 <form className="cart-checkout" action="/">
-                  <input type="submit" value="Update Cart" />
+                  {/* <input type="submit" value="Update Cart" /> */}
                   {/* <Link to="/check-out"><input type="submit" value="Proceed to Checkout" /></Link> */}
-                  <div><CheckoutPage
+                  <div><CheckoutPage 
                       cartItems={cartItems}
                       address={address}
                       city={city}
                       pincode={pincode}
+                      orderTotal={orderTotal}
                     />
                   </div>
                 </form>

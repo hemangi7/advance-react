@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { firestore } from "../../firebase/firebase.config";
 
@@ -24,12 +24,13 @@ const OrdersPage = () => {
 
   return (
     <div className="container mx-auto mt-8">
-      <h1 className="text-3xl font-bold mb-4">Orders</h1>
+      
+      
       <ul className="space-y-4">
         {orders.map((order) => (
           <li
             key={order.id}
-            className="bg-white p-4 shadow-md rounded-md transition duration-300 hover:shadow-lg"
+            className="bg-white p-4 shadow-md rounded-md transition duration-300 hover:shadow-lg mb-4"
           >
             <div className="flex justify-between items-center mb-2">
               <span className="text-lg font-semibold">Order ID: {order.id}</span>
@@ -39,12 +40,11 @@ const OrdersPage = () => {
               <strong>Address:</strong> {order.address}, {order.city}, {order.pincode}
             </p>
             <div className="grid grid-cols-2 gap-4">
-              {/* Additional order details can be displayed here */}
               <div>
                 <strong>Total Items:</strong> {order.cartItems.length}
               </div>
               <div>
-                <strong>Total Amount:</strong> ${order.totalAmount}
+                <strong>Total Amount:</strong> ${order.orderTotal ? order.orderTotal.toFixed(2) : 'N/A'}
               </div>
             </div>
           </li>

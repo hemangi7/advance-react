@@ -75,7 +75,10 @@ const router = createBrowserRouter([
         path: "/cart-page",
         element: <PrivateRoute><CartPage/></PrivateRoute>
       },
-      
+      {
+        path: "/orders",
+        element: <Orders/>
+      },
     ]
   },
   {
@@ -98,10 +101,7 @@ const router = createBrowserRouter([
     path: "/customize",
     element: <App1/>
   },
-  {
-    path: "/orders",
-    element: <Orders/>
-  },
+  
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

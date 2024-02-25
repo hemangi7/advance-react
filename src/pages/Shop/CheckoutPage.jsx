@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
 import { firestore } from "../../firebase/firebase.config";
 
-const CheckoutPage = ({ cartItems, address, city, pincode }) => {
+const CheckoutPage = ({ cartItems, address, city, pincode, orderTotal }) => {
   const [show, setShow] = useState(false);
   const [activeTab, setActiveTab] = useState("visa"); // Initial active tab
   const [isFormValid, setIsFormValid] = useState(false);
@@ -32,6 +32,8 @@ const CheckoutPage = ({ cartItems, address, city, pincode }) => {
         address,
         city,
         pincode,
+        orderTotal,
+        date: new Date().toISOString(),
       }; 
       await addDoc(collection(firestore, "orders"), orderData);
       cartItems.forEach(async (item) => {

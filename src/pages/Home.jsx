@@ -1,6 +1,6 @@
 import {motion, AnimatePresence } from 'framer-motion';
 import {useSnapshot} from 'valtio';
-
+import { useNavigate } from 'react-router-dom';
 import state from '../store';
 import {CustomButton} from '../components';
 import {
@@ -12,6 +12,7 @@ import {
 
 const Home = () => {
   const snap = useSnapshot(state);  
+  const navigate = useNavigate();
 
   return (
     <AnimatePresence>
@@ -36,6 +37,12 @@ const Home = () => {
                         type="filled" title="Customize it" handleClick={()=>state.intro = false} customStyles="w-fit px-4 py-2.5 font-bold text-sm"
                         
                         />
+
+                            <button
+                                className="#EFBD48 text-white px-4 py-2 mt-4 rounded-md"
+                                onClick={() => navigate('/')}>
+                                Go Back
+                            </button>
                     </motion.div>
                 </motion.div>
             </motion.section>

@@ -3,14 +3,45 @@ import PageHeader from "../../components/PageHeader";
 import { Link } from "react-router-dom";
 import delImgUrl from "../../assets/images/shop/del.png";
 import CheckoutPage from "./CheckoutPage";
+// import Razorpay from "razorpay";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import { firestore } from "../../firebase/firebase.config";
+import { auth } from "../../contexts/AuthProvider";
+import Button from "react-bootstrap/Button";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [pincode, setPincode] = useState("");
+  const getCartItems = async () => {
+    try {
+      const localCartItem = [];
+      const q = query(
+        collection(firestore, "cart"),
+        where("userId", "==", auth.currentUser.uid)
+      );
+
+      const cartItemsSnap = await getDocs(q);
+      cartItemsSnap.forEach((doc) => {
+        localCartItem.push({ _id: doc.id, ...doc.data() });
+      });
+      setCartItems(localCartItem);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    // Fetch cart items from local storage
-    const storedCartItems = JSON.parse(localStorage.getItem("cart")) || [];
-    setCartItems(storedCartItems);
+    getCartItems();
   }, []);
 
   // Calculate the total price for each item in the cart
@@ -19,38 +50,69 @@ const CartPage = () => {
   };
 
   // Handle quantity increase
-  const handleIncrease = (item) => {
+  const handleIncrease = async (item) => {
     item.quantity += 1;
     setCartItems([...cartItems]);
     // Update local storage with the new cart items
+    await updateDoc(doc(firestore, "cart", item._id), {
+      quantity: item.quantity,
+    });
     localStorage.setItem("cart", JSON.stringify(cartItems));
   };
 
   // Handle quantity decrease
-  const handleDecrease = (item) => {
+  const handleDecrease = async (item) => {
     if (item.quantity > 1) {
       item.quantity -= 1;
       setCartItems([...cartItems]);
-
+      await updateDoc(doc(firestore, "cart", item._id), {
+        quantity: item.quantity,
+      });
       // Update local storage with the new cart items
       localStorage.setItem("cart", JSON.stringify(cartItems));
     }
   };
 
   // Handle item removal
-  const handleRemoveItem = (item) => {
-    // Filter out the item to be removed
-    const updatedCart = cartItems.filter((cartItem) => cartItem.id !== item.id);
-    // Update the state with the new cart
-    setCartItems(updatedCart);
-    // Update local storage with the updated cart
-    updateLocalStorage(updatedCart);
+  const handleRemoveItem = async (item) => {
+    try {
+      await deleteDoc(doc(firestore, "cart", item._id));
+      const updatedCart = cartItems.filter(
+        (cartItem) => cartItem.id !== item.id
+      );
+      getCartItems();
+      setCartItems(updatedCart);
+      console.log("Deleted Doc");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleShow = () => {
+  //   const addressInfo = {
+  //     address,
+  //     city,
+  //     pincode,
+  //   };
+
+  //   // var options = {
+  //   //   key: "rzp_test_Rw6OPD6Xd4oKht",
+  //   //   key_secret: "Vr7Gx2UPc8Zd4H0VR2SsaOjv",
+  //   //   amount: parseInt(orderTotal),
+  //   //   currency: "USD",
+  //   //   order_receipt: "order_rcptit_ShopCart",
+  //   //   name: "Shop Cart",
+  //   //   description: "payment module",
+  //   //   handler: (res) => {
+  //   //     console.log(res);
+  //   //   },
+  //   //   theme: { color: "#3399cc" },
+  //   // };
+
+  //   // var pay = new Razorpay(options);
+  //   // pay.open();
   };
 
-  // Update local storage with the cart items
-  const updateLocalStorage = (cart) => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  };
+
 
   // Calculate the cart subtotal
   const cartSubtotal = cartItems.reduce((total, item) => {
@@ -59,6 +121,10 @@ const CartPage = () => {
 
   // Calculate the order total
   const orderTotal = cartSubtotal;
+
+  useEffect(() => {
+    console.log(cartItems);
+  }, [cartItems]);
 
   return (
     <div>
@@ -145,7 +211,7 @@ const CartPage = () => {
                   <input type="submit" value="Update Cart" />
                   {/* <Link to="/check-out"><input type="submit" value="Proceed to Checkout" /></Link> */}
                   <div>
-                    <CheckoutPage />
+                    <CheckoutPage/>
                   </div>
                 </form>
               </div>
@@ -154,40 +220,34 @@ const CartPage = () => {
               <div className="shiping-box">
                 <div className="row">
                   {/* shipping  */}
-                  <div className="col-md-6 col-12">
+                  <div className="col-md-6 col-6">
                     <div className="calculate-shiping">
                       <h3>Calculate Shipping</h3>
-                      <div className="outline-select">
-                        <select>
-                          <option value="volvo">United Kingdom (UK)</option>
-                          <option value="saab">Bangladesh</option>
-                          <option value="saab">Pakistan</option>
-                          <option value="saab">India</option>
-                          <option value="saab">Nepal</option>
-                        </select>
-                        <span className="select-icon">
-                          <i className="icofont-rounded-down"></i>
-                        </span>
-                      </div>
-                      <div className="outline-select shipping-select">
-                        <select>
-                          <option value="volvo">State/Country</option>
-                          <option value="saab">Dhaka</option>
-                          <option value="saab">Benkok</option>
-                          <option value="saab">Kolkata</option>
-                          <option value="saab">Kapasia</option>
-                        </select>
-                        <span className="select-icon">
-                          <i className="icofont-rounded-down"></i>
-                        </span>
-                      </div>
+
                       <input
                         type="text"
-                        name="coupon"
-                        placeholder="Postcode/ZIP"
-                        className="cart-page-input-text"
+                        name="Address"
+                        placeholder="Address"
+                        value={address}
+                        style={{ marginBottom: 10 }}
+                        onChange={(e) => setAddress(e.target.value)}
                       />
-                      <button type="submit">Update Total</button>
+                      <input
+                        type="text"
+                        name="City"
+                        placeholder="City"
+                        value={city}
+                        style={{ marginBottom: 10 }}
+                        onChange={(e) => setCity(e.target.value)}
+                      />
+                      <input
+                        type="text"
+                        name="pincode"
+                        placeholder="Postcode/ZIP"
+                        value={pincode}
+                        style={{ marginBottom: 10 }}
+                        onChange={(e) => setPincode(e.target.value)}
+                      />
                     </div>
                   </div>
 

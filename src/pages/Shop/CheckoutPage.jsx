@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const CheckoutPage = () => {
   const [show, setShow] = useState(false);
   const [activeTab, setActiveTab] = useState("visa"); // Initial active tab
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const handleTabChange = (tabId) => {
     setActiveTab(tabId);
@@ -27,6 +28,24 @@ const CheckoutPage = () => {
       navigate(from, { replace: true });
   }
 
+  const handleInputChange = () => {
+    // Check if all required fields are filled
+    const isFormValid = Array.from(document.querySelectorAll('.modalCard input[required]')).every(input => input.value.trim() !== '');
+    setIsFormValid(isFormValid);
+  };
+  // Event handler for input changes
+  const handleInputBlur = () => {
+    handleInputChange();
+  };
+
+  // Event handler for Pay Now button click
+  const handlePayNowClick = () => {
+    if (isFormValid) {
+      handleOrderConfirm();
+    } else {
+      alert('Please fill in all required fields before proceeding.');
+    }
+  };
   return (
     <div className="modalCard">
       <Button variant="primary" onClick={handleShow} className="py-2">
@@ -141,7 +160,7 @@ const CheckoutPage = () => {
                         </div>
                         <div className="px-5 pay">
                           <button className="btn btn-success btn-block" onClick={handleOrderConfirm}>
-                            Add card
+                            Pay Now
                           </button>
                         </div>
                       </div>
@@ -206,11 +225,6 @@ const CheckoutPage = () => {
                             <span></span>
                           </div>
                         </div>
-                        <div className="pay px-5">
-                          <button className="btn btn-primary btn-block" onClick={handleOrderConfirm}>
-                            Add paypal
-                          </button>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -220,6 +234,11 @@ const CheckoutPage = () => {
               <p className="mt-3 px-4 p-Disclaimer">
               <em>Payment Disclaimer:</em> In no event shall payment or partial payment by Owner for any material or service
               </p>
+            </div>
+            <div className="modal-footer">
+              <button className="btn btn-success btn-block" onClick={handlePayNowClick} disabled={!isFormValid}>
+                Pay Now
+              </button>
             </div>
           </div>
         </div>

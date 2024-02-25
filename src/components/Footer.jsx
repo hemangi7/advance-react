@@ -3,7 +3,7 @@
 import { Link } from "react-router-dom";
 
 const title = "About ShopCart";
-const desc = "Eduaid theme number one world class university in the world There are student are studing always in this university for all time.";
+const desc = "ShopCart offers a seamless and personalized online shopping experience, combining cutting-edge customization features, secure payments, and a diverse product range, all designed to elevate your shopping journey.";
 const ItemTitle = "Categories";
 const quickTitle = "Quick Links";
 const tweetTitle = "Recent Tweets";
@@ -70,7 +70,7 @@ const ItemList = [
     },
     {
         text: 'Policy',
-        link: '#',
+        link: '/about',
     },
     {
         text: 'FAQs',
@@ -108,30 +108,11 @@ const quickList = [
 const tweetList = [
     {
         iconName: 'icofont-twitter',
-        desc: <p>Aminur islam <a href="#">@ShopCart Greetings!  #HTML_Template</a> Grab your item, 50% Big Sale Offer !!</p>,
+        desc: <p>Abhishek Malik<a href="#">@ShopCart Greetings!  #HTML_Template</a> Grab your item, 50% Big Sale Offer !!</p>,
     },
     {
         iconName: 'icofont-twitter',
-        desc: <p>Somrat islam <a href="#">@ShopCart Hey! #HTML_Template</a> Grab your item, 50% Big Sale Offer !!</p>,
-    },
-]
-
-const footerbottomList = [
-    {
-        text: 'Faculty',
-        link: '#',
-    },
-    {
-        text: 'Staff',
-        link: '#',
-    },
-    {
-        text: 'Students',
-        link: '#',
-    },
-    {
-        text: 'Alumni',
-        link: '#',
+        desc: <p>Soumya Kadam<a href="#">@ShopCart Hey! #HTML_Template</a> Grab your item, 50% Big Sale Offer !!</p>,
     },
 ]
 
@@ -231,11 +212,6 @@ const Footer = () => {
         <div className="container">
             <div className="section-wrapper">
                 <p>&copy; 2023 <Link to="/">Shop Cart</Link> Designed by <a href="https://themeforest.net/user/CodexCoder" target="_blank">XYZ</a> </p>
-                <div className="footer-bottom-list">
-                    {footerbottomList.map((val, i) => (
-                        <a href={val.link} key={i}>{val.text}</a>
-                    ))}
-                </div>
             </div>
         </div>
     </div>

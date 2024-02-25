@@ -3,12 +3,12 @@ import CountUp from 'react-countup';
 import { Link } from "react-router-dom";
 
 const subTitle = "About our brand";
-const title = "Welcome to VSH - Where Style Meets Convenience!";
-const desc = `At Shoppee, we believe that shopping should be an experience that seamlessly blends style, convenience, and a touch of excitement. Our passion for providing a delightful shopping journey led us to curate a diverse collection of high-quality products, ensuring that every customer finds something they love.
+const title = "Welcome to ShopCart - Where Style Meets Convenience!";
+const desc = `At ShopCart, we believe that shopping should be an experience that seamlessly blends style, convenience, and a touch of excitement. Our passion for providing a delightful shopping journey led us to curate a diverse collection of high-quality products, ensuring that every customer finds something they love.
 Who We Are:
-Founded with a vision to redefine online shopping, [Your Ecommerce Website Name] is your one-stop destination for all things trendy, innovative, and practical. We understand the dynamic nature of fashion and technology, and we're committed to staying ahead of the curve. Whether you're a fashion-forward trendsetter or a tech enthusiast, our carefully curated selection caters to all tastes and preferences.
+Founded with a vision to redefine online shopping, ShopCart is your one-stop destination for all things trendy, innovative, and practical. We understand the dynamic nature of fashion and technology, and we're committed to staying ahead of the curve. Whether you're a fashion-forward trendsetter or a tech enthusiast, our carefully curated selection caters to all tastes and preferences.
 Our Mission:
-At the core of Shoppee's mission is a commitment to delivering exceptional value to our customers. We strive to create a seamless and enjoyable shopping experience by offering a wide range of products, from the latest fashion trends to cutting-edge gadgets. Our mission is to empower our customers to express their unique style, enhance their lifestyles, and stay connected with the ever-evolving world of innovation.`;
+At the core of ShopCart's mission is a commitment to delivering exceptional value to our customers. We strive to create a seamless and enjoyable shopping experience by offering a wide range of products, from the latest fashion trends to cutting-edge gadgets. Our mission is to empower our customers to express their unique style, enhance their lifestyles, and stay connected with the ever-evolving world of innovation.`;
 const btnText = "Apply  Now";
 
 const countList = [

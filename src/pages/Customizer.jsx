@@ -8,10 +8,25 @@
  import {EditorTabs, FilterTabs, DecalTypes} from '../config/constants';
  import { fadeAnimation, slideAnimation } from '../config/motion';
  import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab } from '../components';
- 
+ import alanBtn from '@alan-ai/alan-sdk-web';
  const Customizer = () => {
   const snap = useSnapshot(state);
 
+  const handleDownload =() =>{
+    downloadCanvasToImage();
+  };
+
+  const alanKey = 'ecd072f18df94ea605d8b04dc53fa0a02e956eca572e1d8b807a3e2338fdd0dc/stage';
+  useEffect(() => {
+    alanBtn({
+      key: alanKey,
+      onCommand: ({command}) => {
+        if(command === 'testCommand'){
+          alert('This code was executed');
+        }
+      }
+    })
+  })
   const [file, setFile ] = useState('');
   const [prompt, setPrompt] = useState('');
   const [generatingImg, setGeneratingImg] = useState(false);
@@ -144,6 +159,14 @@
                       handleClick={() => handleActiveFilterTab(tab.name)}
                     />
                     ))}
+              <motion.div className='download-btn' {...fadeAnimation}>
+              <img
+              src={download}
+              alt="Download Customized Shirt"
+              onClick={handleDownload}
+              className="download-icon"
+            />
+              </motion.div>
             </motion.div>
           </>
         )}

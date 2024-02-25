@@ -27,28 +27,30 @@ function ForgotPassword(){
     }
     return(
         <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
-      <div className="w-100" style={{ maxWidth: "400px" }}>
-        <Card>
+      <div className="login-section padding-tb section-bg" style={{ maxWidth: "400px" }}>
+        <Card className="login-section padding-tb section-bg">
           <Card.Body>
             <h2 className="text-center mb-4">Forgot Password</h2>
             {successMessage && <Alert variant="success">{successMessage}</Alert>}
             {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-            <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  placeholder="Enter email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </Form.Group>
-              <Button variant="primary" type="submit" className="w-100">
-                Reset Password
-              </Button>
-            </Form>
+            <form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+    <Form.Label>Email address</Form.Label>
+    <Form.Control
+      type="email"
+      name="email"
+      placeholder="Enter email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      required
+    />
+  </Form.Group>
+  <div className="text-center">
+    <Button type="submit" className="lab-btn">
+      Reset Password
+    </Button>
+  </div>
+            </form>
           </Card.Body>
         </Card>
       </div>

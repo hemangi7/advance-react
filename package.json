@@ -10,16 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@alan-ai/alan-sdk-web": "^1.8.54",
     "@popperjs/core": "^2.11.8",
     "@react-three/drei": "^9.90.0",
     "@react-three/fiber": "^8.15.12",
     "bootstrap": "^5.3.3",
+    "classnames": "^2.5.1",
     "emailjs-com": "^3.2.0",
     "firebase": "^10.5.0",
     "firebase-admin": "^12.0.0",
     "framer-motion": "^11.0.5",
     "maath": "^0.10.4",
-    "razorpay": "^2.9.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
     "react-color": "^2.19.3",
@@ -27,10 +28,12 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.1",
     "react-router-dom": "^6.16.0",
+    "request": "^2.88.2",
     "styled-components": "^6.1.8",
     "swiper": "^10.3.1",
     "three": "^0.159.0",
-    "valtio": "^1.12.1"
+    "valtio": "^1.12.1",
+    "words-to-numbers": "^1.5.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

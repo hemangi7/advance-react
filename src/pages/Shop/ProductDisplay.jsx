@@ -1,6 +1,11 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { auth } from "../../contexts/AuthProvider";
+import { addDoc, collection, doc } from "firebase/firestore";
+import { firestore } from "../../firebase/firebase.config";
+// import { toast } from "react-toastify";
+
 const desc =
   "Energistia an deliver atactica metrcs after avsionary Apropria trnsition enterpris an sources applications emerging 	psd template.";
 
@@ -29,7 +34,7 @@ const ProductDisplay = ({ item }) => {
     setColor(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Create an object representing the product to be added to the cart
@@ -37,18 +42,45 @@ const ProductDisplay = ({ item }) => {
       id: id,
       img: img,
       name: name,
-      price: price, 
+      price: price,
       quantity: prequantity,
       size: size,
       color: color,
       coupon: coupon,
     };
 
+    try {
+      const userId = auth.currentUser.uid;
+      const userCartRef = collection(firestore, "cart");
+
+      // Use set with merge: true to add the product to the cart without overwriting existing data
+      await addDoc(userCartRef, {
+        ...product,
+        userId,
+      });
+      toast.success("🦄 Wow so easy!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      console.log("Product added to cart successfully!");
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+    }
+
     // Retrieve existing cart items from local storage or initialize an empty array
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
 
     // Check if the product with the same ID is already in the cart
-    const existingProductIndex = existingCart.findIndex((item) => item.id === id);
+    const existingProductIndex = existingCart.findIndex(
+      (item) => item.id === id
+    );
 
     if (existingProductIndex !== -1) {
       // Product already in the cart; update quantity
@@ -88,59 +120,59 @@ const ProductDisplay = ({ item }) => {
       </div>
       {/* Single Product Cart Component here */}
       <div>
-      <form onSubmit={handleSubmit}>
-      <div className="select-product size">
-        <select value={size} onChange={handleSizeChange}>
-          <option>Select Size</option>
-          <option>SM</option>
-          <option>MD</option>
-          <option>LG</option>
-          <option>XL</option>
-          <option>XXL</option>
-        </select>
-        <i className="icofont-rounded-down"></i>
-      </div>
-      <div className="select-product color">
-        <select value={color} onChange={handleColorChange}>
-          <option>Select Color</option>
-          <option>Pink</option>
-          <option>Ash</option>
-          <option>Red</option>
-          <option>White</option>
-          <option>Blue</option>
-        </select>
-        <i className="icofont-rounded-down"></i>
-      </div>
-      <div className="cart-plus-minus">
-        <div onClick={handleDecrease} className="dec qtybutton">
-          -
-        </div>
-        <input
-          className="cart-plus-minus-box"
-          type="text"
-          name="qtybutton"
-          value={prequantity}
-          onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
-        />
-        <div className="inc qtybutton" onClick={handleIncrease}>
-          +
-        </div>
-      </div>
-      <div className="discount-code mb-2">
-        <input
-          type="text"
-          placeholder="Enter Discount Code"
-          onChange={(e) => setCoupon(e.target.value)}
-        />
-      </div>
-      <button type="submit" className="lab-btn">
-        <span>Add To Cart</span>
-      </button>
+        <form onSubmit={handleSubmit}>
+          <div className="select-product size">
+            <select value={size} onChange={handleSizeChange}>
+              <option>Select Size</option>
+              <option>SM</option>
+              <option>MD</option>
+              <option>LG</option>
+              <option>XL</option>
+              <option>XXL</option>
+            </select>
+            <i className="icofont-rounded-down"></i>
+          </div>
+          <div className="select-product color">
+            <select value={color} onChange={handleColorChange}>
+              <option>Select Color</option>
+              <option>Pink</option>
+              <option>Ash</option>
+              <option>Red</option>
+              <option>White</option>
+              <option>Blue</option>
+            </select>
+            <i className="icofont-rounded-down"></i>
+          </div>
+          <div className="cart-plus-minus">
+            <div onClick={handleDecrease} className="dec qtybutton">
+              -
+            </div>
+            <input
+              className="cart-plus-minus-box"
+              type="text"
+              name="qtybutton"
+              value={prequantity}
+              onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
+            />
+            <div className="inc qtybutton" onClick={handleIncrease}>
+              +
+            </div>
+          </div>
+          <div className="discount-code mb-2">
+            <input
+              type="text"
+              placeholder="Enter Discount Code"
+              onChange={(e) => setCoupon(e.target.value)}
+            />
+          </div>
+          <button type="submit" className="lab-btn">
+            <span>Add To Cart</span>
+          </button>
 
-      <Link to="/cart-page" className="lab-btn bg-primary">
-        <span>Check Out</span>
-      </Link>
-    </form>
+          <Link to="/cart-page" className="lab-btn bg-primary">
+            <span>Check Out</span>
+          </Link>
+        </form>
       </div>
     </div>
   );

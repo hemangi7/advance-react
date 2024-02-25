@@ -40,7 +40,7 @@ const contactList = [
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    from_name: "",
     email: "",
     number: "",
     subject: "",
@@ -68,7 +68,7 @@ const Contact = () => {
         console.log("Email sent successfully:", response);
         // You can add a success message or redirect the user
         setFormData({
-          name: "",
+          from_name: "",
           email: "",
           number: "",
           subject: "",
@@ -123,7 +123,7 @@ const Contact = () => {
           <div className="section-wrapper">
             <form className="contact-form" onSubmit={handleFormSubmit}>
               <div className="form-group">
-                <input type="text" name="name" placeholder="Your Name *" onChange={handleInputChange} />
+                <input type="text" name="from_name" placeholder="Your Name *" onChange={handleInputChange} />
               </div>
               <div className="form-group">
                 <input type="text" name="email" placeholder="Your Email *" onChange={handleInputChange} />
@@ -147,6 +147,7 @@ const Contact = () => {
               <div className="form-group w-100">
                 <textarea
                   rows="8"
+                  name="message"
                   type="text"
                   placeholder="Your Message"
                   onChange={handleInputChange}

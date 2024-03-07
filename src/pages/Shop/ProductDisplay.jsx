@@ -13,8 +13,7 @@ const desc =
 
 const ProductDisplay = ({ item }) => {
   const { id, img, price, name, quantity, seller } = item;
-  const [prequantity, setQuantity] = useState(quantity);
-  const [coupon, setCoupon] = useState("");
+  const [prequantity, setQuantity] = useState(1);
   const [size, setSize] = useState("Select Size");
   const [color, setColor] = useState("Select Color");
 
@@ -39,6 +38,7 @@ const ProductDisplay = ({ item }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
     // Create an object representing the product to be added to the cart
     const product = {
       id: id,
@@ -48,8 +48,51 @@ const ProductDisplay = ({ item }) => {
       quantity: prequantity,
       size: size,
       color: color,
-      coupon: coupon,
     };
+
+    //
+    if (size === "Select Size") {
+      toast.error("Please select a size", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
+    else if (color === "Select Color") {
+      toast.error("Please select a color", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
+    else if (prequantity < 1) {
+      toast.error("Please enter a quantity greater than 0", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
 
     try {
       const userId = auth.currentUser.uid;
@@ -99,7 +142,6 @@ const ProductDisplay = ({ item }) => {
     setQuantity(1);
     setSize("Select Size");
     setColor("Select Color");
-    setCoupon("");
 
     // You can add further logic, such as displaying a confirmation message.
   };
@@ -135,6 +177,7 @@ const ProductDisplay = ({ item }) => {
             </select>
             <i className="icofont-rounded-down"></i>
           </div>
+          
           <div className="select-product color">
             <select value={color} onChange={handleColorChange}>
               <option>Select Color</option>
@@ -146,6 +189,7 @@ const ProductDisplay = ({ item }) => {
             </select>
             <i className="icofont-rounded-down"></i>
           </div>
+          <div>
           <div className="cart-plus-minus">
             <div onClick={handleDecrease} className="dec qtybutton">
               -
@@ -161,21 +205,16 @@ const ProductDisplay = ({ item }) => {
               +
             </div>
           </div>
-          <div className="discount-code mb-2">
-            <input
-              type="text"
-              placeholder="Enter Discount Code"
-              onChange={(e) => setCoupon(e.target.value)}
-            />
-          </div>
+          <div className="flex space-x-16">
           <button type="submit" className="lab-btn">
-            <span>Add To Cart</span>
-            
+            <span>Add To Cart </span>
           </button>
 
           <Link to="/cart-page" className="lab-btn bg-primary">
             <span>Check Out</span>
           </Link>
+          </div>
+          </div>
         </form>
       </div>
     </div>
